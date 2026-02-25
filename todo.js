@@ -51,23 +51,29 @@ const toggleComplete = (index) => {
   renderItems();
 }
 
-const editItem = (index) => {
-  const input = document.querySelectorAll('.todo-item-input')[index];
+  const editItem = (index) => {
+    const input = document.querySelectorAll('.todo-item-input')[index];
 
-  input.removeAttribute("readonly");
-  input.focus();
-  input.classList.add("editing");
+    input.removeAttribute("readonly");
+    input.focus();
+    input.classList.add("editing");
 
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      storedItems[index].fruit = input.value;
+    const saveChanges = () => {
+      storedItems[index].fruit = input.value.trim();
       localStorage.setItem('items', JSON.stringify(storedItems));
       renderItems();
-    }
-  }, { once: true }); // prevents stacking listeners
+    };
 
-  // add on click done button
-};
+    // Save on Enter
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        input.blur(); // triggers blur
+      }
+    });
+
+    // Save when clicking outside
+    input.addEventListener('blur', saveChanges, { once: true });
+  };
 
 const attachDragEvents = () => {
   const items = document.querySelectorAll(".todo-item-wrapper .item");
@@ -148,3 +154,12 @@ addBtn.addEventListener(("click"), () => {
 })
 
 renderItems();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch((err) => console.log("SW registration failed:", err));
+  });
+}
