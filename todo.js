@@ -23,6 +23,7 @@ const renderItems = () => {
       <div draggable="true" data-index="${index}" class="item ${item.completed ? 'completed' : ''}">
         <input type="text" value="${item.fruit}" readonly class="todo-item-input"/>
         <div class="todo-item-btn-wrapper">
+        <input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleComplete(${index})"/>
           <button onclick="editItem(${index})" class="edit-btn">Edit</button>
           <button onclick="deleteItem(${index})" class="delete-btn">Delete</button>
         </div>
@@ -39,6 +40,17 @@ const deleteItem = (index) => {
   renderItems();
 };
 
+const toggleComplete = (index) => {
+  storedItems[index].completed = !storedItems[index].completed;
+  localStorage.setItem('items', JSON.stringify(storedItems));
+
+  if (storedItems[index].completed) {
+    const input = document.querySelectorAll('.todo-item-input')[index];
+    input.classList.add("completed")
+  }
+  renderItems();
+}
+
 const editItem = (index) => {
   const input = document.querySelectorAll('.todo-item-input')[index];
 
@@ -53,6 +65,8 @@ const editItem = (index) => {
       renderItems();
     }
   }, { once: true }); // prevents stacking listeners
+
+  // add on click done button
 };
 
 const attachDragEvents = () => {
@@ -119,5 +133,18 @@ const updateArrayOrder = () => {
   localStorage.setItem("items", JSON.stringify(storedItems));
   renderItems();
 };
+
+const addBtn = document.getElementById("add-btn");
+
+addBtn.addEventListener(("click"), () => {
+  const input = document.getElementById("input" )
+
+  if (input.value.trim() !== "") {
+    storedItems.push({ fruit: input.value, completed: false })
+    localStorage.setItem("items", JSON.stringify(storedItems))
+    input.value = "";
+    renderItems()
+  }
+})
 
 renderItems();

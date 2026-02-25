@@ -5,13 +5,20 @@
   width: 100%;
   height: 100%;
   min-height: 100vh;
+  flex-direction: column;
+}
+
+.todo-item-wrapper {
+  width: 100%;
+  justify-content: center;
+  display: flex;
 }
 
 .todo-item-wrapper .item {
   display: flex;
   justify-content: space-between;
-  width: 300px;
-  max-width: 300px;
+  width: 100%;
+  max-width: 500px;
   padding: 10px;
   margin: 5px 0;
   background-color: #f0f0f0;
@@ -30,6 +37,8 @@
 .todo-item-wrapper .item input.editing {
   border-bottom: 1px solid #000;
   cursor: text;
+  text-decoration: none !important; 
+  color: #000 !important;
 }
 
 .todo-item-wrapper .item button {
@@ -88,4 +97,42 @@
 
 .todo-item-wrapper .item button.delete-btn:hover:after {
   opacity: 1;
+}
+
+.todo-item-wrapper .item.completed input {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.input-wrapper input {
+  padding: 10px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.input-wrapper button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.input-wrapper button:hover {
+  background-color: #45a049;
+}
+
+.todo-item-btn-wrapper {
+  display: flex;
+  align-items: center;
 }
