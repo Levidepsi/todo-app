@@ -1,11 +1,12 @@
 #container {
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
   min-height: 100vh;
   flex-direction: column;
+  max-width: 500px;
+  margin: 50px auto;
 }
 
 .todo-item-wrapper {
@@ -138,4 +139,50 @@
 .todo-item-btn-wrapper {
   display: flex;
   align-items: center;
+}
+
+.filter {
+  position: relative;
+  border: 1px solid #ccc;
+  width: 100px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.filter .options {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 20;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter .options.active {
+  top: 50px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.filter .options .option {
+  padding: 10px;
+}
+
+.filter .options .option:hover {
+  background-color: #f0f0f0;
+}
+
+.filter .options .option:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }

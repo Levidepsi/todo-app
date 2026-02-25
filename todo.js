@@ -1,4 +1,25 @@
 const container = document.getElementById('todo-item-wrapper');
+const active_filter = document.querySelector(".active-filter")
+const filter = document.querySelector(".filter")
+const allOption = document.querySelectorAll(".options .option")
+const options = document.querySelector(".options")
+
+
+active_filter.addEventListener("click", () => {
+
+  options.classList.toggle("active");
+})
+
+let activeOption = "All"
+
+allOption.forEach((option) => {
+  option.addEventListener("click", () => {
+    active_filter.textContent = option.textContent;
+    activeOption = option.textContent;
+    options.classList.toggle("active");
+    renderItems();
+  })
+})
 
 let draggedItem = null;
 
@@ -17,8 +38,8 @@ let storedItems = JSON.parse(localStorage.getItem('items'));
 
 const renderItems = () => {
   container.innerHTML = '';
-
-  storedItems.forEach((item, index) => {
+  let filteredItems = activeOption === "All" ? storedItems : storedItems.filter(item => activeOption === "Completed" ? item.completed : !item.completed);
+  filteredItems.forEach((item, index) => {
     container.innerHTML += `
       <div draggable="true" data-index="${index}" class="item ${item.completed ? 'completed' : ''}">
         <input type="text" value="${item.fruit}" readonly class="todo-item-input"/>
